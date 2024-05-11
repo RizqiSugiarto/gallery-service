@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GaleryServiceClient interface {
 	SaveLink(ctx context.Context, in *SaveLinkRequest, opts ...grpc.CallOption) (*CommonResponse, error)
-	GetAllLinkByUserId(ctx context.Context, in *GetLinkByUserIdRequest, opts ...grpc.CallOption) (*GetLinkByUserIdResponse, error)
+	GetLinkByUserId(ctx context.Context, in *GetLinkByUserIdRequest, opts ...grpc.CallOption) (*GetLinkByUserIdResponse, error)
 	UpdateLink(ctx context.Context, in *UpdateLinkRequest, opts ...grpc.CallOption) (*CommonResponse, error)
 	DeleteLink(ctx context.Context, in *DeleteLinkRequest, opts ...grpc.CallOption) (*CommonResponse, error)
 }
@@ -45,9 +45,9 @@ func (c *galeryServiceClient) SaveLink(ctx context.Context, in *SaveLinkRequest,
 	return out, nil
 }
 
-func (c *galeryServiceClient) GetAllLinkByUserId(ctx context.Context, in *GetLinkByUserIdRequest, opts ...grpc.CallOption) (*GetLinkByUserIdResponse, error) {
+func (c *galeryServiceClient) GetLinkByUserId(ctx context.Context, in *GetLinkByUserIdRequest, opts ...grpc.CallOption) (*GetLinkByUserIdResponse, error) {
 	out := new(GetLinkByUserIdResponse)
-	err := c.cc.Invoke(ctx, "/GaleryService/GetAllLinkByUserId", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/GaleryService/GetLinkByUserId", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +77,7 @@ func (c *galeryServiceClient) DeleteLink(ctx context.Context, in *DeleteLinkRequ
 // for forward compatibility
 type GaleryServiceServer interface {
 	SaveLink(context.Context, *SaveLinkRequest) (*CommonResponse, error)
-	GetAllLinkByUserId(context.Context, *GetLinkByUserIdRequest) (*GetLinkByUserIdResponse, error)
+	GetLinkByUserId(context.Context, *GetLinkByUserIdRequest) (*GetLinkByUserIdResponse, error)
 	UpdateLink(context.Context, *UpdateLinkRequest) (*CommonResponse, error)
 	DeleteLink(context.Context, *DeleteLinkRequest) (*CommonResponse, error)
 	mustEmbedUnimplementedGaleryServiceServer()
@@ -90,8 +90,8 @@ type UnimplementedGaleryServiceServer struct {
 func (UnimplementedGaleryServiceServer) SaveLink(context.Context, *SaveLinkRequest) (*CommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SaveLink not implemented")
 }
-func (UnimplementedGaleryServiceServer) GetAllLinkByUserId(context.Context, *GetLinkByUserIdRequest) (*GetLinkByUserIdResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAllLinkByUserId not implemented")
+func (UnimplementedGaleryServiceServer) GetLinkByUserId(context.Context, *GetLinkByUserIdRequest) (*GetLinkByUserIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLinkByUserId not implemented")
 }
 func (UnimplementedGaleryServiceServer) UpdateLink(context.Context, *UpdateLinkRequest) (*CommonResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateLink not implemented")
@@ -130,20 +130,20 @@ func _GaleryService_SaveLink_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GaleryService_GetAllLinkByUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _GaleryService_GetLinkByUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetLinkByUserIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GaleryServiceServer).GetAllLinkByUserId(ctx, in)
+		return srv.(GaleryServiceServer).GetLinkByUserId(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/GaleryService/GetAllLinkByUserId",
+		FullMethod: "/GaleryService/GetLinkByUserId",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GaleryServiceServer).GetAllLinkByUserId(ctx, req.(*GetLinkByUserIdRequest))
+		return srv.(GaleryServiceServer).GetLinkByUserId(ctx, req.(*GetLinkByUserIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -196,8 +196,8 @@ var GaleryService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _GaleryService_SaveLink_Handler,
 		},
 		{
-			MethodName: "GetAllLinkByUserId",
-			Handler:    _GaleryService_GetAllLinkByUserId_Handler,
+			MethodName: "GetLinkByUserId",
+			Handler:    _GaleryService_GetLinkByUserId_Handler,
 		},
 		{
 			MethodName: "UpdateLink",

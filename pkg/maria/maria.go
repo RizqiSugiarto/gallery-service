@@ -34,7 +34,9 @@ func New(url string, opts ...Option) (*Maria, error) {
 		opt(ma)
 	}
 
-	ma.Builder = squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar)
+	ma.Builder = squirrel.StatementBuilder.PlaceholderFormat(squirrel.Question)
+
+	url += "?parseTime=true"
 
 	db, err := sql.Open("mysql", url)
 
@@ -46,7 +48,6 @@ func New(url string, opts ...Option) (*Maria, error) {
 	ma.Db.SetConnMaxLifetime(ma.ConnMaxLifeTime)
 	ma.Db.SetMaxOpenConns(ma.MaxOPenConns)
 	ma.Db.SetMaxIdleConns(ma.MaxIdleConns)
-	fmt.Println("SUCCESSS")
 	return ma, nil
 }
 

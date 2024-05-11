@@ -23,8 +23,6 @@ func RunMigrate(db *sql.DB) {
 		log.Fatal("environtment variable not declare: URL_DB")
 	}
 
-	
-
 	databaseUrl += "?sslmode=disable"
 
 	var(
@@ -48,7 +46,7 @@ func RunMigrate(db *sql.DB) {
 	}
 
 	err = m.Up()
-	defer m.Close()
+	// defer m.Close()
 	if err != nil && !errors.Is(err, migrate.ErrNoChange) {
 		log.Fatalf("Migrate: up error: %s", err)
 	}

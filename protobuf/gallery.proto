@@ -6,7 +6,7 @@ option go_package = "./proto";
 
 service GaleryService {
     rpc SaveLink(SaveLinkRequest) returns (CommonResponse){};
-    rpc GetAllLinkByUserId(GetLinkByUserIdRequest) returns (GetLinkByUserIdResponse){};
+    rpc GetLinkByUserId(GetLinkByUserIdRequest) returns (GetLinkByUserIdResponse){};
     rpc UpdateLink(UpdateLinkRequest) returns (CommonResponse) {};
     rpc DeleteLink(DeleteLinkRequest) returns (CommonResponse) {};
 }
@@ -43,13 +43,13 @@ message GetLinkByUserIdResponse {
 
 message UpdateLinkRequest {
     string userId = 1;
-    Galery galery = 2;
+    string link = 2;
 }
 
 
 //delete
 
 message DeleteLinkRequest {
-    string UserId = 1;
+    string userId = 1;
 }
 
