@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./proto";
+
+service GaleryService {
+    rpc SaveLink(SaveLinkRequest) returns (CommonResponse){};
+    rpc GetAllLinkByUserId(GetLinkByUserIdRequest) returns (GetLinkByUserIdResponse){};
+    rpc UpdateLink(UpdateLinkRequest) returns (CommonResponse) {};
+    rpc DeleteLink(DeleteLinkRequest) returns (CommonResponse) {};
+}
+
+message Galery {
+    string id = 1;
+    string link = 2;
+    string userId = 3;
+    google.protobuf.Timestamp created_at = 4;
+    google.protobuf.Timestamp updated_at = 5;
+}
+
+// create
+message SaveLinkRequest {
+    string link = 1;
+    string userId = 2;
+}
+
+message CommonResponse {
+    string message = 1;
+}
+
+
+//getLinByUserId
+message GetLinkByUserIdRequest {
+    string userId = 1;
+}
+
+message GetLinkByUserIdResponse {
+    Galery galery = 1;
+}
+
+//update
+
+message UpdateLinkRequest {
+    string userId = 1;
+    Galery galery = 2;
+}
+
+
+//delete
+
+message DeleteLinkRequest {
+    string UserId = 1;
+}
+

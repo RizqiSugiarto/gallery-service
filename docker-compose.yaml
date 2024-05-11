@@ -1,0 +1,16 @@
+version: '3'
+volumes:
+  data:
+services:
+  db:
+    image: mariadb
+    container_name: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: mypassword
+      MYSQL_DATABASE: gallery
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+    volumes:
+      - data:/var/lib/mysql
+    ports:
+      - "3307:3306"
