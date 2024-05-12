@@ -102,14 +102,16 @@ func(g *GalleryRepo) GetById(ctx context.Context, userId string) (entity.Gallery
 	var userData entity.Gallery
 	
 	sql, args, err := g.Builder.
-			Select("*").
+			Select("id, link, user_Id, created_at, updated_at").
 			From("gallery").
 			Where(squirrel.Eq{"user_id": userId}).
-			ToSql()
+            Where(squirrel.Eq{"deleted_at": nil}).
+            ToSql()
 		
 		if err != nil {
 			return entity.Gallery{}, fmt.Errorf("galleryrepo - GetById - g.Builder: %v", err)
 		}
+
 
 		rows:= g.Db.QueryRow(sql, args...)
 
@@ -152,10 +154,15 @@ func(g *GalleryRepo) Delete(ctx context.Context, userId string) error {
         return fmt.Errorf("data not found")
     }
 
+    deleteValue := map[string]interface{}{
+        "deleted_at": time.Now(),
+    }
+
 	sql, args, err := g.Builder.
-			Delete("gallery").
-			Where(squirrel.Eq{"user_id": userId}).
-			ToSql()
+        Update("gallery").
+        SetMap(deleteValue).
+        Where(squirrel.Eq{"user_id": userId}).
+        ToSql()
 			
 		if err != nil {
 			return fmt.Errorf("galleryrepo - Delete - g.Builder: %v", err)
